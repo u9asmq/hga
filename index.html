@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-SKL SMAN 1 LUBAI ULU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: url('background.jpg');
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: #1d08a6;
+      margin-bottom: 10px;
+    }
+
+    input, button {
+      padding: 12px;
+      margin: 10px 0;
+      width: 90%;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #1d08a6;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Logo SMAN1LU" class="logo" />
+    <h1>Pengumuman Kelulusan<br>2025</h1>
+    <p>Masukkan NISN untuk melihat hasil</p>
+    <input type="text" id="nisnInput" placeholder="Contoh: 0012345678" />
+    <button onclick="cekKelulusan()">Cek Kelulusan</button>
+    <div class="result" id="hasil"></div>
+    <footer>© SMA Negeri 1 Lubai Ulu 2025</footer>
+  </div>
+
+  <script>
+    const dataKelulusan = {
+      "123": { nama: "UGAS MUNARGO", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1nPkX26STf8sP1w1_c0g6yVmWIFkcIefJ/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+  "321": { nama: "MAT SOLAR", status: "DITUNDA", ket: "Belum melengkapi Tugas PAI, PP, BING", skl:"TIDAK TERSEDIA"},
+  "11456": { nama: "ALFIAN RIZAL TRI ANDIKA", status: "SELAMAT ANDA" },
+  "11468": { nama: "ANNISA IZZAH KAMILAH", status: "SELAMAT ANDA LULUS" },
+  "11470": { nama: "ARDIYANSYAH GANANG PRATAMA", status: "SELAMAT ANDA LULUS" },
+  "11471": { nama: "ARRIJAL AL ATSMAN", status: "SELAMAT ANDA LULUS" },
+  "11477": { nama: "AULYA ZAHRA TITANIA", status: "SELAMAT ANDA LULUS" },
+  "11486": { nama: "BILQIS RISKA AGUSTINA", status: "SELAMAT ANDA LULUS" },
+  "11487": { nama: "BINTANG RAYHAN ADITYA", status: "ganteng" },
+  "11494": { nama: "DEKA ARDIAN NUR YULIANTO", status: "SELAMAT ANDA LULUS" },
+  "11497": { nama: "DELLA YULIANTI", status: "SELAMAT ANDA LULUS" },
+  "11505": { nama: "DYAH AYU LESTARI", status: "SELAMAT ANDA LULUS" },
+  "11508": { nama: "ELOK MEITIAWATI", status: "SELAMAT ANDA LULUS" },
+  "11513": { nama: "ENDAH WULANDARI", status: "SELAMAT ANDA LULUS" },
+  "11516": { nama: "FADHILAH HUSNA ANGGRAINI", status: "SELAMAT ANDA LULUS" },
+  "11520": { nama: "FARAH AULIA", status: "SELAMAT ANDA LULUS" },
+  "11522": { nama: "FAUZIAH MAULIDIYAH", status: "SELAMAT ANDA LULUS" },
+  "11524": { nama: "FIRDA FITRIANI", status: "SELAMAT ANDA LULUS" },
+  "11527": { nama: "FIRZA YULIANTI", status: "SELAMAT ANDA LULUS" },
+  "11534": { nama: "GHOFRON AKMAL RIZKY", status: "SELAMAT ANDA LULUS" },
+    };
+
+    function cekKelulusan() {
+      const nisn = document.getElementById("nisnInput").value.trim();
+      const hasilDiv = document.getElementById("hasil");
+      const data = dataKelulusan[nisn];
+
+      if (data) {
+        hasilDiv.innerHTML = `
+          <p>Nama: <strong>${data.nama}</strong></p>
+          <p>Status Kelulusan: <strong style="color: ${data.status === 'SELAMAT ANDA LULUS' ? 'green' : 'red'}">${data.status}</strong></p>
+          <p>Keterangan: <strong>${data.ket}</strong></p>
+          <p>File SKL: <strong>${data.skl}</strong></p>
+        `;
+      } else {
+        hasilDiv.innerHTML = "<p style='color: gray;'>Data tidak ditemukan. Periksa kembali NISN Anda.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
