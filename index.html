@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-SKL SMAN 1 LUBAI ULU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: url('background.jpg');
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: #1d08a6;
+      margin-bottom: 10px;
+    }
+
+    input, button {
+      padding: 12px;
+      margin: 10px 0;
+      width: 90%;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #1d08a6;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Logo SMAN1LU" class="logo" />
+    <h1>Pengumuman Kelulusan<br>2025</h1>
+    <p>Masukkan NISN untuk melihat hasil</p>
+    <input type="text" id="nisnInput" placeholder="Contoh: 0012345678" />
+    <button onclick="cekKelulusan()">Cek Kelulusan</button>
+    <div class="result" id="hasil"></div>
+    <footer>© SMA Negeri 1 Lubai Ulu 2025</footer>
+  </div>
+
+  <script>
+    const dataKelulusan = {
+"0069268114": { nama: "ALDO KURNIAWAN ADRA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0069631011": { nama: "Andi Anggara Putra", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079486362": { nama: "APRINA SALSABILAH", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074924590": { nama: "Aradea", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071435901": { nama: "BUNGA CITRA LESTARI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"3065243732": { nama: "Dela Enjelita", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0078906526": { nama: "DEWI PATMASARI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079882276": { nama: "DIRA ANDINI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074581730": { nama: "DISSA RAMADHANI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073137709": { nama: "DWI SEVA AGUSTIANA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0078997520": { nama: "Feby Ria Anggraini", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064280073": { nama: "Fitrah Al Baihaqi", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072756705": { nama: "GAURI AISYAH KINANTI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072567233": { nama: "HERNA SARI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0078337931": { nama: "INONG JESIKA SAMOSIR", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077546467": { nama: "INTANIA DWI AMANDA PUTRI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071106582": { nama: "Kaila Sesi Anjelika", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076029544": { nama: "Keizia Zefani Mulya", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071030897": { nama: "Khoirunisa Warido", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074409963": { nama: "KRISNA BAYU", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0078690634": { nama: "MIKO ANDRIAN SAPUTRA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"3077475562": { nama: "Nabila Meydina Rosa", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0062710641": { nama: "NICOLAS AZIS SAPUTRA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0088935002": { nama: "OKTARIA RAHMADANI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077241111": { nama: "REPA ANDA SARI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065909146": { nama: "Riyana Andini", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076102129": { nama: "SELVI TRIANA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072986767": { nama: "Serajana", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079062955": { nama: "SETI WALHIDAYA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073553989": { nama: "TASYA APRILIA PUTRI AMANDA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076500773": { nama: "Thirza Friscillia", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073193257": { nama: "TIAS PUTRI KINANTI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071755949": { nama: "Umaya Sari Tri Riski", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073769518": { nama: "AISYAH NUR HASANA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071394177": { nama: "Aliya Sinta Bela", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077916517": { nama: "Arisa Teria Agustin", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1sQh5ztAEp0ykDRG31biXw9aKclSmGjD3/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0063150271": { nama: "BEDI JORDY", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0084241783": { nama: "DELSA HAYATINISA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077728600": { nama: "Diah Meisya Putri", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071096982": { nama: "ERMA RIA MIRANDA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0054961981": { nama: "FARIT ANDIKA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0075415819": { nama: "GEBRIL RIANI CHARELINA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0066352790": { nama: "Herta Marlena", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064098270": { nama: "Ibnu Nur Ikhsan", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076237384": { nama: "Indah Pratiwi", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0061888796": { nama: "ITSNAINI HUSNUL KHOTIMAH", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"3064352478": { nama: "LOLA MISRAH", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0052567140": { nama: "MEILIA BELLA SALSABILA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064378684": { nama: "MUHAMMAD RIZKI SATRIO", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1X4TlU7P-PCTRxYeataSDmCs_hrdwliYh/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0076506452": { nama: "NADIA MAYANG LARASATI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1onVu5yoxNihVa630790nE5-2AymRPXhf/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0066703877": { nama: "NATIA PARESA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065098391": { nama: "NITRA PILZA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077853067": { nama: "OKTA DIANI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065839168": { nama: "PEROLISA ANGGRAINI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1EdJ2aDlfUQWQUvyK-8s2HE2kifpzuWbP/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0139255171": { nama: "PIPIN MARDALENA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073856836": { nama: "RIYAS PRAZELI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0067495820": { nama: "ROSALIA DESWITA DYAH CAHYANI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0087085575": { nama: "SONI YATI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"3075102885": { nama: "Tiara Valentina", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1as37pNdf3IaJmcGrv70toN4UUiBq-1MW/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0069138506": { nama: "VELINDA LHODYYAPUTRI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1jTA0KyKyaFPeFFxYcuDm3UsA8EQc78V5/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0076047496": { nama: "Via Rosa Rahmadini", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/14qx4dBlQQAQwCseNoZvmWrH9kijKPJs8/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0077181768": { nama: "Virgi lia Wulandari", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1MB6Mme3cFyTphzngGdbUGWbECkrBQkt-/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0075230024": { nama: "Wigi Pratiwi Zalianti", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074785261": { nama: "YUMIZA SARI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065316140": { nama: "YUSUF PRA DEWA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0062803449": { nama: "Aditya Agustian Pratama", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1NOAQ2my0D7zdGfHswt7-pGOtKs9UsvCZ/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0069276181": { nama: "AGUNG RAMADHANI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1tBtv3dKl5-Lj9OOGVj2TTHUwaI-pmSaY/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0066883120": { nama: "AMELIA PERMATA SARI", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079304629": { nama: "ANNISA AZZAHARA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1WtES3WxKdbGSPF19Ly1mTnvyYGU3yW22/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0077856307": { nama: "Aulia Ramadhani", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1dJoyUx4Iq95uvr_VRKxAsOCciOjI4T5N/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0078777274": { nama: "Ayudya Kirana Putri", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1FpbXel3LhYedEb4bcE6jtbx9Wx99xKww/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0051410342": { nama: "Chelsa Andira", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1ZjmpFxvTpqEtUPD_ZEO8BDYvhXzUpLg0/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0063521324": { nama: "CHOLIL JANANTA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0067310402": { nama: "DENTA ERLANGGA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1unM-npMhiY0ygVXXX43EgBxx88fjUqCY/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0077070380": { nama: "Echa Airin Cintia Wati", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1ArjnYMGtF1pHUlEwby2iqx2BaBrPk0xt/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0073502008": { nama: "ENDANG CAESYARANI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/10g58KBKfJqT2PnVahIXUvdmEdZvU2oSu/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0067769484": { nama: "Junaidi Prayoga", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1kpvstbcQjoZkKvsj_PgJ0qSN9lQ-tNyj/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0069161592": { nama: "Laudia Cintia Bella", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065415069": { nama: "Mahsya Callista Dewi", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1iH5tDoRbMl1aQWH_b3MbtN76kPycorJr/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0074333352": { nama: "Maryesa", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1edNNsP-MZhipFh7JYxIQyvVgX1fiUYJf/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0064008064": { nama: "Miranda", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1EMCPctQqtZWJDqOl5AOgVgIEwRbcJBH_/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0054014024": { nama: "Nia Ramadhani", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1t_x3kSnRUNf8nfQy1E0YdFyo3wFoF1eu/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0075383332": { nama: "NOVI SAGITA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1KM7i-CXVpPDxAoOJlcJb4hUZ4Wb2LcX8/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0067303899": { nama: "Novia Merry Indriyani", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1flsYOlOO9JLbXc2i-eSU7-uzI1JM_RSa/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0088287428": { nama: "Plora Astriyani", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1OeHsF9yGOaeU8d63sRN6P1MSfow9kq5j/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0074809132": { nama: "RADO RAHMAN SHALEH", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1bJY3TVFTNzGRCCNbt72j03dA_aEY7mdQ/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0079264447": { nama: "Ratu Merlin Anggraini", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1dV74ZwmLyUxGoXfEdCUWmX-qxdBZluRU/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0064813680": { nama: "RIZKI KURNIAWANSYAH", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1ISaIlubcRCLKcaNLlbHXGa0JG98bf1xi/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0077357293": { nama: "Serly Kurniawati", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064848285": { nama: "SERLY MARIA SARAGIH", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0075153526": { nama: "SINDY AULIA SARI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1dkG8x5LFW3QoCodsjoy3x4h6gE_l_qOL/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0069700852": { nama: "SISCA AYU SEPTYANDARI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1hTTcjoY3ftG8jphY6JmJZ7VeHWDrHg_g/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0067699741": { nama: "Sulistia Wati", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/11l_Ii4jD0Ym55uAXJCLxrpCbJPS-abei/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0066155370": { nama: "Ummi Roudhotul Jannah Wahyu Putri", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1_VehWrh-LoruyftChWRH0FCMaFKqWzjl/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0073678721": { nama: "VIOLA APRILIA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1kQIP5cXduJKNn44xXnAynvVrTQuUTfvE/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0076347968": { nama: "VIRGIANTI VINORA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1YNszZD5LD6yBdgcyndyS6WSMGzAS2zp3/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0062427063": { nama: "Adit Ramadhani", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0044813558": { nama: "Agung Raspur", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0075061031": { nama: "Aila Azhura Aslamia", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0087680960": { nama: "ALDO", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072451282": { nama: "ARIA DANI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079048232": { nama: "AUREL AGA TRIANSYAH", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074708129": { nama: "AYU BUNGA NALARATI", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065638183": { nama: "Cindi Cloudia", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074443502": { nama: "FINA KARNITA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0063891338": { nama: "INDRIA DESTA MAHARANI", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072394792": { nama: "JEAFEAROCA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077981621": { nama: "JULI PARASIAN PANJAITAN", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0062611939": { nama: "KRISMA DEWI MURTI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1ho2wN4DIfFeWvIPsfgvk3jgjf8PH8_lj/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0076690532": { nama: "Kristina", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0069271102": { nama: "LEO APRIANSA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072757300": { nama: "LERIN SAPUTRI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1YmqHHr30VxMTioxEtOxsuFo9XzsAVHXU/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0083287009": { nama: "LESTARI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0068342059": { nama: "M.Dirly Dwi Pangestu", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073255153": { nama: "MERLINDA SYAFITRI", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071226917": { nama: "Muhammad Leo Nardo", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073196820": { nama: "NOVI ERYANA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1hWkNPzpywoCkoVhKJmmFnRjBnTqqBi2k/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0066020391": { nama: "Oki Ramadhani", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL MATEMATIKA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0075550488": { nama: "PANDU WINATA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071283349": { nama: "PUSPA LESTARI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1zMr74hznSZw_vLIV8B196g2V95GNzcNT/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0075127529": { nama: "RADO APRIYANTO", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077554184": { nama: "Reagen Pascalis Situmorang", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0063812761": { nama: "Rifaldi Avanza", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, BAHASA INGGRIS, PAI, PP, BIOLOGI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0066590662": { nama: "RIZKI RAMADANI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA, PAI, PP, BIOLOGI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064769033": { nama: "Roger Danuarta", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074728769": { nama: "Sandri Pirdina", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076258283": { nama: "Trisa Mareta", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1Eepg9ATEAu0Vo29ceP4tJwclaO9L4kV5/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0076143383": { nama: "Wamannu Ammirhu", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065546857": { nama: "WISNU ADITYA TAMA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0058519598": { nama: "Yuliana", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076380283": { nama: "ALFANO RIZAL", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP, BIOLOGI. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0075362416": { nama: "ALIN TAMARA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0054147355": { nama: "Andika Adi Pratama", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0044534725": { nama: "ANDINI SAPUTRI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077335350": { nama: "Arif Hanafi", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065128346": { nama: "ASHAD ILYAS", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065966775": { nama: "Bani Sriwijaya", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1oQQ-j5-3z3eNrNvczrHsroSxOlJ-i5yn/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0030876953": { nama: "BINTANG SATRIO", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064762624": { nama: "CARLES APRIZAL", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1lHkYOb7CEsrPGG4OIrP8QgF9EBfZ_M6-/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0075756901": { nama: "Danu Irawan", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INGGRIS, PAI, PP, BIOLOGI. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074719074": { nama: "Dirgahayu Saputra", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0061972931": { nama: "FADMA YARAHMA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071480178": { nama: "FAJAR ALFAREZ NANDA RETA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1m1uJPCbIn01H_9QFnkJ_r8A_FLTGptM2/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0076007089": { nama: "Fariel Diaz Setiawan", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1ap1ZLZeg_qESxd3wvfp7fsYqhMa6_Qb1/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0038257312": { nama: "GUSTI ANDINI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INGGRIS, PAI, PP, BIOLOGI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077549002": { nama: "INTAN CAHYANI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079992430": { nama: "Kelvin Repan saputra", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079906468": { nama: "KIKIN LYRA PRASETIA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0066579113": { nama: "MUHAMAD DIKI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0069917641": { nama: "NITA MUTIARA SAPUTRI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1OuQkw9-p7rxw5geRyjBQNcny8qU-djMq/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0071079159": { nama: "Pindra Erliski Adiswara", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073354736": { nama: "Rachel Bintang Efendi", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071862462": { nama: "Rendika Arius Agriansa YR", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073719753": { nama: "REZA ADRIAN", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079497115": { nama: "SAGIWA KALPALES", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073157079": { nama: "SELVY ANGGRAINY", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1WmrhaM2ExXiXeNWIfaXvYsLroivZLakA/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0055045116": { nama: "SINDI AMBARWATI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1N8sRfb_Hoxxmhptu5r8qE4nJYAWFXYlT/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0067981108": { nama: "SOFI STEFI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0066818565": { nama: "SRI DAYANTI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077517060": { nama: "Stema Fajar", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP, BIOLOGI. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0054857542": { nama: "TIARA HERLINA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076759587": { nama: "Yoselfa Rinaldi", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0075453178": { nama: "Adelya Safitri", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1xLDS5d4DE1gq5k58wT0iZjbJnA4pxu1w/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0077408112": { nama: "AHMAD MAULANA RIZKY PRATAMA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073679626": { nama: "AJI AKBAR", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076163011": { nama: "ANDRIANSYAH", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073660569": { nama: "ANGGUN PURNAMASARI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1Fi7nez1gsByakztWhvv_kNdO_Ihq1XUu/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0078178321": { nama: "APPRI YANDRA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079502073": { nama: "ARTIKA SUKMA TARI", status: "DITUNDA", ket: ". ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071951692": { nama: "Arya Prabu Permana", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079709957": { nama: "Bachtiar Efendi", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0068589431": { nama: "DANIEL NOFEM DIWANTRA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0078158123": { nama: "DERANDA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0069047383": { nama: "Eman Dinata", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076979392": { nama: "Farel Dimas Bintara Yuda", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0078377652": { nama: "Fifi Rizkiyanasari", status: "DITUNDA", ket: ". ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076727337": { nama: "Gali Ramadon", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079439663": { nama: "Irma Damayanti", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1Kr6UCzHWwapyZEI_vOARBpafSvTS0__o/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0078210238": { nama: "JIHAN MUTIARA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1FHyBgnTAO36WWcs3vtuxO7HEbRHibAs-/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0074439129": { nama: "JODY ALFAREL", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071776857": { nama: "KARTIKA AYU WANDIRA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074173788": { nama: "Krisna Adi Prasetio", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1um5AkqxlKQPzojOgQNdGlNHkzz_5cYjY/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0063478455": { nama: "KURNIA DWI PRATIWI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1KxgHe-V2sdZy78NNcRFmWIGvqFqT7zwy/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0067196304": { nama: "LEO OKTAVIAN", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073947804": { nama: "Lyvia Rahel Pebrian", status: "DITUNDA", ket: ". ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079122664": { nama: "M. ARIPTA PAJERI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0050851455": { nama: "Malik", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP, BIOLOGI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076731258": { nama: "MUHAMAD NAZRIEL AKBAR", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1qAdpu6c24uqt_0M8ANQkoNE70DDbeF7y/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0076409077": { nama: "NESA AYU LESTARI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/12dKcy6M7W_duYA8RWuWY2Rm6L7KmlLDU/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0073752397": { nama: "RADO ANDHIKA STEVANUS SARAGIH", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0088662285": { nama: "RAHEL MONALISA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/15P3v-wb6_lrjgdEROhuH_1DXSjCy_ZwA/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0077325934": { nama: "Rani Sagita", status: "DITUNDA", ket: ". ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0078059430": { nama: "RATNA AMELYA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074850269": { nama: "Romeo Anggara Putra", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1et18HOLdLtgJWx0KDnav1iLU7gxj8qoQ/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0078605885": { nama: "Sandy Habibi", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077780925": { nama: "SUHENDRA", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1AZbWT37Mk4KxMjK7XtmXLivMFyDHL86N/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0068295794": { nama: "YONI JAYU AMANDA", status: "DITUNDA", ket: ". ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074445037": { nama: "ADI SAPUTRA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079440930": { nama: "Adil Raygalo Gandi", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0069532511": { nama: "AHMAD SATRIO", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065107855": { nama: "AJIS OBEROY", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073266862": { nama: "AMELIA SUSANTI", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076657080": { nama: "Amri Adiyaksa", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077715569": { nama: "ARBEN PRATAMA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064062771": { nama: "Arjunedi", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA, BAHASA INGGRIS, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0073521924": { nama: "Cindi Sinta", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"3071561412": { nama: "CINTA AZELA PUTRII", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064238284": { nama: "DENI HERMAWAN", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065750226": { nama: "DEVI ZULIANTI", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065910313": { nama: "ENGGI DARUSTA", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071381719": { nama: "FAREL PANKY SIAWIL SINGER", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA,BAHASA INGGRIS, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0063075401": { nama: "Fernando Khalifah Akbar", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0069231415": { nama: "Handoko Dwi Pramono", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, MATEMATIKA, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065281579": { nama: "JEPRI MASSANDO", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, BAHASA INGGRIS,PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071937366": { nama: "KEIKONITA INNESSIA AMANDA", status: "DITUNDA", ket: ". ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0076233447": { nama: "M. Veter Golan", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0065509365": { nama: "MAHDARANI", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0079271443": { nama: "NOSA ARIS SUANDUTA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0074019355": { nama: "NOVA KIRANA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0071925891": { nama: "NURHAYATI", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072181257": { nama: "Oky Cahyati", status: "DITUNDA", ket: ". ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0061238443": { nama: "PRATAMA GUSTIAWAN S", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP. MASIH BERMASALAH TERKAIT DENGAN DATA KARTU KELUARGA", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072804113": { nama: "PUTRI AYU AZHARI", status: "SELAMAT ANDA LULUS", ket: "-", skl:'<a href="https://drive.google.com/file/d/1mEsQk-_uOaqoleIywb-l06RFJrn_XqFT/view?usp=drivesdk" target="_blank">Download SKL</a>' },
+"0069249492": { nama: "Ranggatia Putra", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0056253772": { nama: "Reki Irawan", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL BAHASA INDONESIA, PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0078941310": { nama: "REVA FARADILLA PUTRI JIONO", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0061119536": { nama: "REZA ADIT PRATAMA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0064014996": { nama: "Riaju Pitasari", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0069145446": { nama: "RUSLAN", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0077294067": { nama: "SHAKILLA CICI MONICA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP. ADA BUKU YANG BELUM DIKEMBALIKAN", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0072403994": { nama: "SITI NUR YANA", status: "DITUNDA", ket: "BELUM MENUNTASKAN TUGAS PADA MAPEL PAI, PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+"0061400612": { nama: "USWATUN HASANAH", status: "DITUNDA", ket: "BELUM TUNTAS TUGAS PP", skl:'<a href="TIDAK TERSEDIA" target="_blank">Download SKL</a>' },
+    };
+
+    function cekKelulusan() {
+      const nisn = document.getElementById("nisnInput").value.trim();
+      const hasilDiv = document.getElementById("hasil");
+      const data = dataKelulusan[nisn];
+
+      if (data) {
+        hasilDiv.innerHTML = `
+          <p>Nama: <strong>${data.nama}</strong></p>
+          <p>Status Kelulusan: <strong style="color: ${data.status === 'SELAMAT ANDA LULUS' ? 'green' : 'red'}">${data.status}</strong></p>
+          <p>Keterangan: <strong>${data.ket}</strong></p>
+          <p>File SKL: <strong>${data.skl}</strong></p>
+        `;
+      } else {
+        hasilDiv.innerHTML = "<p style='color: gray;'>Data tidak ditemukan. Periksa kembali NISN Anda.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
